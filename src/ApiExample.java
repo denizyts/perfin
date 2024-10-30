@@ -13,7 +13,7 @@ public class ApiExample {
             URL url3 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/TUPRS");
             URL url4 = new URL("https://api.hurriyet.com.tr/v1/articles?$select=Title");
 
-            HttpURLConnection con = (HttpURLConnection) url4.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             
             con.setRequestMethod("GET");
             con.setInstanceFollowRedirects(true); // Otomatik yönlendirme
