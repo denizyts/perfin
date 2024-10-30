@@ -1,3 +1,4 @@
+package silme;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,12 +23,12 @@ public class StockScraperSelenium {
         driver.get("https://www.isyatirim.com.tr/tr-tr/analiz/hisse/Sayfalar/Tarihsel-Fiyat-Bilgileri.aspx");
 
         try {
-            Thread.sleep(50000); // 50 saniye bekleme (gerekirse artırılabilir)
+            Thread.sleep(30000); // 50 saniye bekleme (gerekirse artırılabilir)
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
         WebElement hisseSelectElement = wait.until(
             ExpectedConditions.visibilityOfElementLocated(By.id("ctl00_ctt58_g_0d19e9f2_2afd_4e5a_9a92_57c4ab45c57a_ctl00_ddHisseSec"))

@@ -7,8 +7,9 @@ public class myGui extends JFrame {
 
     public myGui() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300,300);
+        frame.setSize(500,800);
         JButton button = new JButton("Press");
+        button.setBackground(Color.RED);
         frame.getContentPane().add(button); // Adds Button to content pane of frame
         frame.setVisible(true);
     }
