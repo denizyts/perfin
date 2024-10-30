@@ -1,15 +1,19 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/Users/denizyetis/Downloads/sqlite-jdbc-3.45.1.6-SNAPSHOT.jar",
-        "/Users/denizyetis/Downloads/jackson-annotations-2.18.0.jar",
-        "/Users/denizyetis/Downloads/jackson-core-2.18.0.jar",
-        "/Users/denizyetis/Downloads/jackson-databind-2.18.0.jar",
-        "/Users/denizyetis/Downloads/jsoup-1.18.1-sources.jar",
-        "/Users/denizyetis/Downloads/jsoup-1.18.1.jar",
-        "/Users/denizyetis/Downloads/selenium-java-4.25.0/**/*.jar",
-        "/Users/denizyetis/Downloads/slf4j-api-1.7.36.jar",
-        "/Users/denizyetis/Downloads/slf4j-api-2.1.0-alpha1-sources.jar",
-        "/Users/denizyetis/Downloads/slf4j-simple-1.7.36.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "/Users/denizyetis/Downloads/jackson-annotations-2.18.0.jar",
+            "/Users/denizyetis/Downloads/jackson-core-2.18.0.jar",
+            "/Users/denizyetis/Downloads/jackson-databind-2.18.0.jar",
+            "/Users/denizyetis/Downloads/jsoup-1.18.1-sources.jar",
+            "/Users/denizyetis/Downloads/jsoup-1.18.1.jar",
+            "/Users/denizyetis/Downloads/selenium-java-4.25.0/**/*.jar",
+            "/Users/denizyetis/Downloads/slf4j-api-1.7.36.jar",
+            "/Users/denizyetis/Downloads/slf4j-api-2.1.0-alpha1-sources.jar",
+            "/Users/denizyetis/Downloads/slf4j-simple-1.7.36.jar"
+        ],
+        "exclude": [
+            "c:\\Users\\alpbo\\Downloads\\sqlite-jdbc-3.45.1.6-SNAPSHOT.jar"
+        ]
+    }
 }

@@ -9,11 +9,11 @@ public class ApiExample {
         try {
             // API URL'si
             URL url = new URL("https://bigpara.hurriyet.com.tr/api/v1/hisse/list?");
-            URL url2 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/ISCTR");
-            URL url3 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/TUPRS");
-            URL url4 = new URL("https://api.hurriyet.com.tr/v1/articles?$select=Title");
+            //URL url2 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/ISCTR");
+            //URL url3 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/TUPRS");
+            //URL url4 = new URL("https://api.hurriyet.com.tr/v1/articles?$select=Title");
 
-            HttpURLConnection con = (HttpURLConnection) url4.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             
             con.setRequestMethod("GET");
             con.setInstanceFollowRedirects(true); // Otomatik yönlendirme
