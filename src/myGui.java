@@ -1,18 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
-// Ana uygulama sınıfı
 public class myGui extends JFrame {
 
     private JFrame frame = new JFrame("My First GUI");
 
     public myGui() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,800);
-        JButton button = new JButton("Press");
-        button.setBackground(Color.RED);
-        frame.getContentPane().add(button); // Adds Button to content pane of frame
-        frame.setVisible(true);
         setTitle("Stock Dashboard");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,6 +141,8 @@ public class myGui extends JFrame {
     }
 }
 
+
+//********************************************************************SECOND PAGE**************************************************** */
 class OperationPage extends JFrame {
     public OperationPage() {
         setTitle("Operation Page");
@@ -156,15 +151,36 @@ class OperationPage extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(20, 24, 54));
 
-        JLabel label = new JLabel("Welcome to the new page!", JLabel.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 18));
-        label.setForeground(Color.BLACK);
-        add(label, BorderLayout.CENTER);
+        JPanel leftPanel = createLeftPanel();
+        add(leftPanel);
+        
+        JPanel rightPanel = createRightPanel();
+        add(rightPanel);
 
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+    private JPanel createLeftPanel() {
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(new Color(35, 39, 64));
+        leftPanel.setBounds(20, 20, 620, 520);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        return leftPanel;
+    }
+
+    private JPanel createRightPanel() {
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBackground(new Color(35,39,64));
+        rightPanel.setBounds(660, 20, 300, 520);
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        return rightPanel;
+    }
+
 }
+
+
+//****************************************************************************************************************************************** */
 
 class TradePage extends JFrame {
     public TradePage () { //parametre olarak ana sayfadan seçilen hissenin ismi gelmeli ki dataları ona göre çekelim
