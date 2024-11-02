@@ -3,8 +3,6 @@ import java.awt.*;
 
 public class myGui extends JFrame {
 
-    private JFrame frame = new JFrame("My First GUI");
-
     public myGui() {
         setTitle("Stock Dashboard");
         setSize(1000, 600);
@@ -78,7 +76,7 @@ public class myGui extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.setColor(Color.ORANGE);
-                g.fillArc(50, 30, 200, 200, 0, 180); // THYAO: 60%
+                g.fillArc(50, 30, 200, 200, 0, 180); // THYAO: 50%
                 g.setColor(Color.GREEN);
                 g.fillArc(50, 30, 200, 200, 180, 72); // NVDA: 20%
                 g.setColor(Color.CYAN);
@@ -171,10 +169,56 @@ class OperationPage extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(20, 24, 54));
 
+        JPanel panel = createCenterPanel();
+        add(panel);
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    private JPanel createCenterPanel() {
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBackground(new Color(35, 39, 64));
+        centerPanel.setBounds(280, 20, 400, 520);
+        centerPanel.setLayout(new BorderLayout());
+        
+        // etiket
+        JLabel portfolioLabel = new JLabel("PORTFOLIO", JLabel.CENTER);
+        portfolioLabel.setForeground(Color.WHITE);
+        portfolioLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        centerPanel.add(portfolioLabel, BorderLayout.NORTH);
+        
+        // İşlemler paneli
+        JPanel showOperationPanel = new JPanel();
+        showOperationPanel.setBackground(new Color(35, 39, 64));
+        showOperationPanel.setLayout(new BorderLayout());
+    
+        // Tüm işlemler için JTextArea
+        JTextArea operationItem = new JTextArea();
+        operationItem.setForeground(Color.WHITE);
+        operationItem.setFont(new Font("Arial", Font.ITALIC, 14));
+        operationItem.setBackground(new Color(35, 39, 64));
+        operationItem.setEditable(false);  
+        operationItem.setLineWrap(true);   // Satır kaydırma özelliğini açma
+        operationItem.setWrapStyleWord(true);
+    
+        // Son 50 işlemi JTextArea içine ekleme //buraya yapılan işlemin tarihi detaylaı gösterilmeli yakından uzaga sort edilmeli 
+        for (int i = 1; i <= 500; i++) {
+            operationItem.append(i + ") TUCLK(BUY) - 20 Shares - 130,30\n");
+        }
+    
+        //  JScrollPane ekleme
+        JScrollPane scrollPane = new JScrollPane(operationItem);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBorder(null); 
+        showOperationPanel.add(scrollPane, BorderLayout.CENTER);
+        centerPanel.add(showOperationPanel, BorderLayout.CENTER);
+        operationItem.setCaretPosition(0); //scroll bunu koymazsan sonda kalıyor 
+
+        return centerPanel;
+    }
+    
+    
 }
 
 
@@ -221,15 +265,49 @@ class TradePage extends JFrame {
         rightPanel.setBounds(660, 20, 300, 250); 
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20))); 
 
         JLabel addLabel = new JLabel("ADD BUY");
         addLabel.setForeground(Color.WHITE);
         addLabel.setFont(new Font("Arial", Font.BOLD, 18));
         addLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         rightPanel.add(addLabel);
 
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        // alış adet label 
+        JLabel countLabel = new JLabel("Buy Quantity");
+        countLabel.setForeground(Color.WHITE);
+        countLabel.setFont(new Font("Arial", Font.ITALIC, 16));
+        countLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        rightPanel.add(countLabel);
+
+        // alış adet sayaç
+        JSpinner StockSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1)); 
+        StockSpinner.setMaximumSize(new Dimension(250, 30)); 
+        rightPanel.add(StockSpinner);
+
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        // alış fiyat label 
+        JLabel salePriceLabel = new JLabel("Buy Price");
+        salePriceLabel.setForeground(Color.WHITE);
+        salePriceLabel.setFont(new Font("Arial", Font.ITALIC, 16));
+        salePriceLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        rightPanel.add(salePriceLabel);
+
+        // alış adet sayaç
+        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1)); 
+        PriceSpinner.setMaximumSize(new Dimension(250, 30)); 
+        rightPanel.add(PriceSpinner);
+        
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+
+        JButton submitButton = new JButton("BUY");
+        submitButton.setPreferredSize(new Dimension(75, 25)); 
+        submitButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        rightPanel.add(submitButton);
 
         return rightPanel;
     }
@@ -239,7 +317,7 @@ class TradePage extends JFrame {
         rightPanel.setBackground(new Color(35, 39, 64));
         rightPanel.setBounds(660, 280, 300, 260);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        rightPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Boş alan ekleme
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 20))); 
     
         // ekleme label 
         JLabel addLabel = new JLabel("ADD SELL");
