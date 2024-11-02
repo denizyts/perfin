@@ -13,7 +13,4 @@ public class myGui extends JFrame {
         frame.getContentPane().add(button); // Adds Button to content pane of frame
         frame.setVisible(true);
     }
-
-
-    
 }

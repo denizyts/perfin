@@ -1,0 +1,63 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "fileRead",
+            "request": "launch",
+            "mainClass": "fileRead",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "ApiExample",
+            "request": "launch",
+            "mainClass": "ApiExample",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "executeGui",
+            "request": "launch",
+            "mainClass": "executeGui",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "jdbc",
+            "request": "launch",
+            "mainClass": "jdbc",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "main",
+            "request": "launch",
+            "mainClass": "main",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "StockScraperSelenium",
+            "request": "launch",
+            "mainClass": "silme.StockScraperSelenium",
+            "projectName": "perfin_4b176466"
+        }
+    ]
+}
