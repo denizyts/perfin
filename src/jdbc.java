@@ -26,6 +26,7 @@ public class jdbc
       statement.executeUpdate("insert into person values(3, 'deniz')");
       statement.executeUpdate("insert into person values(4, 'mehmet')");
       statement.executeUpdate("insert into person values(5, 'ufuk')");
+      
       ResultSet rs = statement.executeQuery("select * from person");
       while(rs.next())
       {
