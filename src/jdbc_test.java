@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class jdbc
+public class jdbc_test
 {
   public static void main(String[] args)
   {
@@ -26,7 +26,7 @@ public class jdbc
       statement.executeUpdate("insert into person values(3, 'deniz')");
       statement.executeUpdate("insert into person values(4, 'mehmet')");
       statement.executeUpdate("insert into person values(5, 'ufuk')");
-      
+
       ResultSet rs = statement.executeQuery("select * from person");
       while(rs.next())
       {

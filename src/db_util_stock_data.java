@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 
-public class handleDb {  
+public class db_util_stock_data {  
 
     String[] symbols;
 
-    public handleDb(String[] symbols){
+    public db_util_stock_data(String[] symbols){
         this.symbols = symbols;
     }
 
@@ -27,7 +27,9 @@ public class handleDb {
       
 
         for (String symbol : symbols) {
+        
             String[] values = hm.get(symbol);
+            System.out.println(symbol);
             if (values == null) { break; }
 
             String dropTableQuery = "drop table if exists " + symbol;
@@ -47,6 +49,7 @@ public class handleDb {
                 String insertQuery = "INSERT INTO " + symbol + " (date, close_price) VALUES ('" + date + "', " + close_price + ")";
                 statement.executeUpdate(insertQuery);
             }
+            System.out.println(symbol + " added to db.");
         }
 
     }
