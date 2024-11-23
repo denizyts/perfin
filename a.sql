@@ -71,3 +71,5 @@ insert into portfolio (symbol, amount, avgPrice) values ("doas", 5 , 101.32)
 
 
 select exists(select 1 from portfolio where symbol = "doas")
+
+delete from last_operations where symbol = "doas"
