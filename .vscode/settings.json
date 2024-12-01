@@ -12,7 +12,8 @@
         "/Users/denizyetis/Downloads/slf4j-api-2.1.0-alpha1-sources.jar",
         "/Users/denizyetis/Downloads/slf4j-simple-1.7.36.jar",
         "/Users/denizyetis/Downloads/jfreechart-1.5.2/**/*.jar",
-        "/Users/denizyetis/Downloads/xchart-3.8.8/xchart-3.8.8.jar"
+        "/Users/denizyetis/Downloads/xchart-3.8.8/xchart-3.8.8.jar",
+        "/Users/denizyetis/Downloads/jfreechart-1.0.19/**/*.jar"
     ],
 
     "java.project.outputPath": "bin",
