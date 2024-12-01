@@ -5,7 +5,7 @@ import java.awt.*;
 
 
 public class TradePage extends JFrame{
-    public TradePage (String stock) { //parametre olarak ana sayfadan seçilen hissenin ismi gelmeli ki dataları ona göre çekelim
+    public TradePage (String stock) throws Exception { //parametre olarak ana sayfadan seçilen hissenin ismi gelmeli ki dataları ona göre çekelim
         setTitle("Operation Page");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +24,7 @@ public class TradePage extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    private JPanel createLeftPanel() {
+    private JPanel createLeftPanel() throws Exception {
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(new Color(35, 39, 64));
         leftPanel.setBounds(20, 20, 620, 520);
@@ -33,7 +33,13 @@ public class TradePage extends JFrame{
         // geri butonu
         JButton backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(75, 25)); 
-        backButton.addActionListener(e -> homePage());
+        backButton.addActionListener(e -> {     //lambda expression cant throw an exception :)
+            try {
+                homePage();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
         leftPanel.add(backButton);
 
         return leftPanel;
@@ -146,8 +152,9 @@ public class TradePage extends JFrame{
     }
 
 
-    private void homePage() {
-        new myGui();
+    private void homePage() throws Exception {
+        myGui mg = new myGui();     //for refreshing new object created
+        mg.showGui();    
         this.dispose();
     }
 }

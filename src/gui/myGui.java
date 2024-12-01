@@ -3,13 +3,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import contoller.controller;    
 
 public class myGui extends JFrame {
 
     ArrayList<String> arr_list_last_operations;
+    ArrayList<String> arr_list_portfolio;
+    HashMap<String, Double> percentageMap;
+    String[] stocks;
+    controller controllerObj;
 
-    public myGui() {
-        arr_list_last_operations = new ArrayList<String>();
+    public myGui() throws Exception {
+        controllerObj = new controller();
+        controllerObj.refreshGui(this);
     }
 
     public void showGui() {
@@ -33,8 +40,17 @@ public class myGui extends JFrame {
         
     }
 
-    public void set(ArrayList<String> param_last_operations){
+    public void setLastOperations(ArrayList<String> param_last_operations){
         this.arr_list_last_operations = param_last_operations;
+    }
+    public void setPortfolio(ArrayList<String> param_portfolio){
+        this.arr_list_portfolio = param_portfolio;
+    }
+    public void setStocks(String[] param_stocks){
+        this.stocks = param_stocks;
+    }
+    public void setPercentageMap(HashMap<String, Double> param_percentageMap){
+        this.percentageMap = param_percentageMap;
     }
 
     private JPanel createLeftPanel() {
@@ -42,8 +58,13 @@ public class myGui extends JFrame {
         leftPanel.setBackground(new Color(35, 39, 64));
         leftPanel.setBounds(20, 20, 300, 520);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        
+        JLabel stockLabel = new JLabel("Select Stock");
+        stockLabel.setForeground(Color.WHITE); // Yazı rengini beyaz yapabilirsiniz
+        stockLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(stockLabel); // JLabel'i panele ekleyin
     
-        String[] stocks = {"Select Stock", "THYAO", "TUPRS", "CATES", "PGSUS"}; //buraya database den hisseler gelmeli
+        //String[] stocks = {"Select Stock", "THYAO", "TUPRS", "CATES", "PGSUS"}; //buraya database den hisseler gelmeli
         JComboBox<String> stockDropdown = new JComboBox<>(stocks);
         stockDropdown.setMaximumSize(new Dimension(100, 30)); 
         stockDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,7 +73,11 @@ public class myGui extends JFrame {
         stockDropdown.addActionListener(e -> {
             String selectedStock = (String) stockDropdown.getSelectedItem();
             if (!"Select Stock".equals(selectedStock)) {
-                openTradePage(selectedStock); // Seçilen hisseyi yeni sayfaya gönder
+                try {
+                    openTradePage(selectedStock);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                } 
             }
         });
 
@@ -88,23 +113,29 @@ public class myGui extends JFrame {
         JPanel pieChartPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
+                
                 super.paintComponent(g);
                 g.setColor(Color.ORANGE);
                 g.fillArc(50, 30, 200, 200, 0, 180); // THYAO: 50%
                 g.setColor(Color.GREEN);
                 g.fillArc(50, 30, 200, 200, 180, 72); // NVDA: 20%
-                g.setColor(Color.CYAN);
+                g.setColor(Color.RED);
                 g.fillArc(50, 30, 200, 200, 252, 108); // GOLD: 10%
             }
         };
         pieChartPanel.setPreferredSize(new Dimension(300, 200));
         pieChartPanel.setBackground(new Color(35, 39, 64));
+
         JButton RefreshButton = new JButton("Refresh");
         RefreshButton.setPreferredSize(new Dimension(200, 25)); 
         RefreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RefreshGui();
+                try {
+                    RefreshGui();
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                }
             }
         });
         pieChartPanel.add(RefreshButton , BorderLayout.SOUTH);
@@ -161,7 +192,7 @@ public class myGui extends JFrame {
         this.dispose(); 
     }
 
-    private void openTradePage(String stock) {
+    private void openTradePage(String stock) throws Exception {
         new TradePage(stock);
         this.dispose();
     }
@@ -182,8 +213,9 @@ public class myGui extends JFrame {
         return rightPanel;
     }
 
-    private void RefreshGui() {
-    arr_list_last_operations.add("New Operation"); 
+    private void RefreshGui() throws Exception {
+
+    controllerObj.refreshGui(this);
     
     getContentPane().removeAll();
 

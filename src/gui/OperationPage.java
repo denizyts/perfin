@@ -19,6 +19,7 @@ public class OperationPage extends JFrame{
 
         JPanel panel = createCenterPanel();
         add(panel);
+        add(createLeftPanel());
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -64,6 +65,33 @@ public class OperationPage extends JFrame{
         operationItem.setCaretPosition(0); //scroll bunu koymazsan sonda kalıyor 
 
         return centerPanel;
+    }
+
+    private JPanel createLeftPanel () {
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(new Color(35, 39, 64));
+        leftPanel.setBounds(20, 20, 250, 320);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
+        JButton backButton = new JButton("Back");
+        backButton.setPreferredSize(new Dimension(75, 25)); 
+        backButton.addActionListener(e -> {
+            try {
+                homePage();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+        leftPanel.add(backButton);
+
+
+        return leftPanel;
+    }
+
+    private void homePage() throws Exception {
+        myGui gui = new myGui();
+        gui.showGui();
+        this.dispose();
     }
     
     
