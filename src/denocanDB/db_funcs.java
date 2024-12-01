@@ -10,12 +10,10 @@ import exceptions.*;
 
 
 public class db_funcs{  
-
-    String[] symbols;  //unnecessary field, gereksiz 
+ 
     insert_last_operations ilo_obj;
 
-    public db_funcs(String[] symbols){
-        this.symbols = symbols;
+    public db_funcs(){
         this.ilo_obj = new insert_last_operations();
     }
 
@@ -131,8 +129,9 @@ public class db_funcs{
 }
 
 
-  //returns true if exists in portfolio, both sell buy funcs calls this.
+  //returns true if exists in portfolio, both sell buy funcs calls this. 
   public boolean validanceExistenceCheck(String symbol, Connection connection)throws InvalidSymbolException , SQLException{
+    //Bu query zor bir query.
     String symbolsQuery = "select exists(select 1 symbol from symbols where symbol = \"" + symbol + "\")";
      ResultSet rs_symbols = executeSpecialQueryReturnsRS(symbolsQuery, connection);
      boolean symbolExists = false;

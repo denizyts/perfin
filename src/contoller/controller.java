@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class controller {
     
     public void refreshGui(myGui myGui) throws Exception {
@@ -18,9 +19,19 @@ public class controller {
             
         }
         catch (Exception e){
-            throw new Exception("An error occured: " + e.getMessage());
+            throw new Exception("error bip bip: " + e.getMessage());
         }
 
+    }
+
+    public void refreshOperationPage(OperationPage operationPage) throws Exception {
+        try{
+            getDataFromdb db_getter = new getDataFromdb();
+            operationPage.setLastOperations(db_getter.get_last_operations());
+        }
+        catch (Exception e){
+            throw new Exception("error bip bip: " + e.getMessage());
+        }
     }
 
     public HashMap<String, Double> percentageCalculator(){
@@ -47,10 +58,31 @@ public class controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return percentageMap;
+    }
+
+    public void buyOperation(String symbol , double price , int quantity) throws Exception {
+        db_funcs db_funcsObj = new db_funcs();
+        db_funcsObj.buy_stock(symbol, price , quantity);
+    }
+
+    public void sellOperation(String symbol , double price , int quantity) throws Exception {
+        db_funcs db_funcsObj = new db_funcs();
+        db_funcsObj.sell_stock(symbol, price , quantity);
+    }
+
+    public Double[] getHistPriceData(String symbol) throws Exception {
 
         
+        getDataFromdb db_funcsObj = new getDataFromdb();
+        ArrayList<candleField> arrayList = db_funcsObj.getHistoricalPriceData(symbol);
+        Double[] data = new Double[arrayList.size()];
 
-        return percentageMap;
+        for(int i = 0 ; i < arrayList.size() ; i++){
+            data[i] = arrayList.get(i).getClose_price();
+        }
+
+        return data;
     }
     
 }

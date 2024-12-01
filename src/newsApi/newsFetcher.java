@@ -1,18 +1,18 @@
+package newsApi;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ApiExample {
-    @SuppressWarnings("deprecation") //JAVA 20den sonra url obj oluştururken problemler olmuş.
-    public static void main(String[] args) {
-        try {
-            // API URL'si
-            URL url = new URL("https://bigpara.hurriyet.com.tr/api/v1/hisse/list?");
-            URL url2 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/ISCTR");
-            URL url3 = new URL("https://bigpara.hurriyet.com.tr/api/v1/borsa/hisseyuzeysel/TUPRS");
-            URL url4 = new URL("https://api.hurriyet.com.tr/v1/articles?$select=Title");
+public class newsFetcher {
 
+     @SuppressWarnings("deprecation") //JAVA 20den sonra url obj oluştururken problemler olmuş.
+     public void fetchNews(String searchQuery) {
+         final String api_key = "bfaf4fd25b1f42ccb8751d72e41949da";
+         try {
+            // API URL'si
+            URL url = new URL("https://newsapi.org/v2/everything?q=isctr&from=2024-11-01&sortBy=publishedAt&apiKey=" + api_key);
+         
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             
             con.setRequestMethod("GET");
@@ -43,5 +43,6 @@ public class ApiExample {
         } catch (Exception e) {
             e.printStackTrace();
         }
+            
     }
 }

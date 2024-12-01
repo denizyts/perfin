@@ -3,14 +3,17 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import contoller.controller;
 
 
 public class OperationPage extends JFrame{
 
     ArrayList<String> last_operations_arr_list;
 
-    public OperationPage(ArrayList<String> param_lo_arr_list) {
-        last_operations_arr_list = param_lo_arr_list;
+    public OperationPage() throws Exception {
+        
+        controller controllerObj = new controller();
+        controllerObj.refreshOperationPage(this);
         setTitle("Operation Page");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +28,10 @@ public class OperationPage extends JFrame{
         setVisible(true);
     }
 
+    public void setLastOperations(ArrayList<String> param_last_operations){
+        this.last_operations_arr_list = param_last_operations;
+    }
+
     private JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(35, 39, 64));
@@ -32,7 +39,7 @@ public class OperationPage extends JFrame{
         centerPanel.setLayout(new BorderLayout());
         
         // etiket
-        JLabel portfolioLabel = new JLabel("PORTFOLIO", JLabel.CENTER);
+        JLabel portfolioLabel = new JLabel("Last Operations Log", JLabel.CENTER);
         portfolioLabel.setForeground(Color.WHITE);
         portfolioLabel.setFont(new Font("Arial", Font.BOLD, 18));
         centerPanel.add(portfolioLabel, BorderLayout.NORTH);
@@ -52,8 +59,8 @@ public class OperationPage extends JFrame{
         operationItem.setWrapStyleWord(true);
     
         // Son 50 işlemi JTextArea içine ekleme //buraya yapılan işlemin tarihi detaylaı gösterilmeli yakından uzaga sort edilmeli 
-        for (int i = 1; i <= last_operations_arr_list.size(); i++) {
-            operationItem.append(i + " " + last_operations_arr_list.get(i) + "\n");
+        for (int i = 0; i < last_operations_arr_list.size(); i++) {
+            operationItem.append(i+1 + " " + last_operations_arr_list.get(i) + "\n");
         }
     
         //  JScrollPane ekleme

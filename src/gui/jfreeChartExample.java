@@ -9,7 +9,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ChartInLabel {
+public class jfreeChartExample {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Chart in JLabel Example");

@@ -27,7 +27,7 @@ public class getDataFromdb {
                 Double price = rs.getDouble(4);
                 String side = rs.getString(5);
 
-                total = symbol + " " + date + " " + amount + " " + price + " " + side;
+                total = symbol + " || " + date + " || " + amount + " || " + price + " || " + side;
                 arrayList.add(total);
             }
 

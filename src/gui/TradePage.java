@@ -2,10 +2,16 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import contoller.controller;
 
+import java.awt.image.BufferedImage;
 
 public class TradePage extends JFrame{
+
+    String symbol;
+
     public TradePage (String stock) throws Exception { //parametre olarak ana sayfadan seçilen hissenin ismi gelmeli ki dataları ona göre çekelim
+        this.symbol = stock;
         setTitle("Operation Page");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +48,12 @@ public class TradePage extends JFrame{
         });
         leftPanel.add(backButton);
 
+        BufferedImage chartImage = new chartGenerator(symbol).createChart();
+        JLabel chartLabel = new JLabel();
+        chartLabel.setIcon(new ImageIcon(chartImage));
+        leftPanel.add(chartLabel);
+
+
         return leftPanel;
     }
 
@@ -69,7 +81,7 @@ public class TradePage extends JFrame{
         rightPanel.add(countLabel);
 
         // alış adet sayaç
-        JSpinner StockSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1)); 
+        JSpinner StockSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1)); 
         StockSpinner.setMaximumSize(new Dimension(250, 30)); 
         rightPanel.add(StockSpinner);
 
@@ -83,7 +95,7 @@ public class TradePage extends JFrame{
         rightPanel.add(salePriceLabel);
 
         // alış adet sayaç
-        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1)); 
+        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 0.1)); 
         PriceSpinner.setMaximumSize(new Dimension(250, 30)); 
         rightPanel.add(PriceSpinner);
         
@@ -93,6 +105,16 @@ public class TradePage extends JFrame{
         JButton submitButton = new JButton("BUY");
         submitButton.setPreferredSize(new Dimension(75, 25)); 
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        submitButton.addActionListener(e -> {
+            try{
+                controller controllerObj = new controller();
+                controllerObj.buyOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
+            }
+            catch (Exception e1){
+                e1.printStackTrace();
+                errorPopup(e1);
+            }
+        });
         rightPanel.add(submitButton);
 
         return rightPanel;
@@ -136,7 +158,7 @@ public class TradePage extends JFrame{
         rightPanel.add(salePriceLabel);
 
         // satış adet sayaç
-        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1)); 
+        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 0.1)); 
         PriceSpinner.setMaximumSize(new Dimension(250, 30)); 
         rightPanel.add(PriceSpinner);
         
@@ -146,6 +168,16 @@ public class TradePage extends JFrame{
         JButton submitButton = new JButton("SELL");
         submitButton.setPreferredSize(new Dimension(75, 25)); 
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        submitButton.addActionListener(e -> {
+            try{
+                controller controllerObj = new controller();
+                controllerObj.sellOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
+            }
+            catch (Exception e1){
+                e1.printStackTrace();
+                errorPopup(e1);
+            }
+        });
         rightPanel.add(submitButton);
         
         return rightPanel;
@@ -153,8 +185,12 @@ public class TradePage extends JFrame{
 
 
     private void homePage() throws Exception {
-        myGui mg = new myGui();     //for refreshing new object created
+        myGui mg = new myGui();     //for refreshing new object created also refreshes main page.
         mg.showGui();    
         this.dispose();
+    }
+
+    private void errorPopup(Exception e){
+        JOptionPane.showMessageDialog(this, e, "ERROR !", JOptionPane.ERROR_MESSAGE);
     }
 }

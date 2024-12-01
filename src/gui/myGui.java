@@ -161,7 +161,7 @@ public class myGui extends JFrame {
             }
             JLabel operationItem = new JLabel( i+1 + ". "+ arr_list_last_operations.get(i) , JLabel.CENTER);
             operationItem.setForeground(Color.WHITE);
-            operationItem.setFont(new Font("Arial", Font.PLAIN, 14));
+            operationItem.setFont(new Font("Arial", Font.PLAIN, 10));
             operationPanel.add(operationItem);
         }
     
@@ -173,7 +173,13 @@ public class myGui extends JFrame {
 
         JButton openNewPageButton = new JButton("More Operations");
         openNewPageButton.setPreferredSize(new Dimension(200, 25)); 
-        openNewPageButton.addActionListener(e -> openNewOperationPage(new ArrayList<String>()));
+        openNewPageButton.addActionListener(e -> {
+            try {
+                openNewOperationPage();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
         buttonPanel.add(openNewPageButton);
     
         centerPanel.add(buttonPanel, BorderLayout.SOUTH); 
@@ -187,8 +193,8 @@ public class myGui extends JFrame {
         return centerPanel;
     }
 
-    private void openNewOperationPage(ArrayList<String> arrayList) {
-        new OperationPage(arrayList); 
+    private void openNewOperationPage() throws Exception {
+        new OperationPage(); 
         this.dispose(); 
     }
 

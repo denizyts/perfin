@@ -1,13 +1,13 @@
 package denocanDB;
 import java.util.ArrayList;
 
-public class main {
+public class db_main {
     public static void main(String[] args) throws Exception {
         
 
         String[] symbols = {"doas" , "garan" , "isctr" , "kchol" , "pgsus" , "sahol" , "thyao"};
 
-        db_funcs myDb_funcs = new db_funcs(symbols);
+        db_funcs myDb_funcs = new db_funcs();
 
         //myDb_funcs.buy_stock("sahol", 22.0, 68);
         //myDb_funcs.sell_stock("isctr", 31.0, 4);
