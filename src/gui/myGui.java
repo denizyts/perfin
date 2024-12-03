@@ -2,9 +2,13 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import contoller.controller;    
+import contoller.controller;
+import exceptions.emptyStringException;
+import newsApi.newsField;  
 
 public class myGui extends JFrame {
 
@@ -13,18 +17,21 @@ public class myGui extends JFrame {
     HashMap<String, Double> percentageMap;
     String[] stocks;
     controller controllerObj;
+    ArrayList<newsField> newsList;
 
     public myGui() throws Exception {
         controllerObj = new controller();
         controllerObj.refreshGui(this);
     }
 
-    public void showGui() {
+    public void showGui() throws Exception {
         setTitle("Stock Dashboard");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         getContentPane().setBackground(new Color(20, 24, 54));
+
+        try{
 
         JPanel leftPanel = createLeftPanel();
         add(leftPanel);
@@ -37,6 +44,9 @@ public class myGui extends JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
     }
 
@@ -52,19 +62,21 @@ public class myGui extends JFrame {
     public void setPercentageMap(HashMap<String, Double> param_percentageMap){
         this.percentageMap = param_percentageMap;
     }
+    public void setNewsList(ArrayList<newsField> param_newsList){
+        this.newsList = param_newsList;
+    }
 
-    private JPanel createLeftPanel() {
+    private JPanel createLeftPanel() throws Exception {
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(new Color(35, 39, 64));
         leftPanel.setBounds(20, 20, 300, 520);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         
         JLabel stockLabel = new JLabel("Select Stock");
-        stockLabel.setForeground(Color.WHITE); // Yazı rengini beyaz yapabilirsiniz
+        stockLabel.setForeground(Color.WHITE); 
         stockLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(stockLabel); // JLabel'i panele ekleyin
+        leftPanel.add(stockLabel); 
     
-        //String[] stocks = {"Select Stock", "THYAO", "TUPRS", "CATES", "PGSUS"}; //buraya database den hisseler gelmeli
         JComboBox<String> stockDropdown = new JComboBox<>(stocks);
         stockDropdown.setMaximumSize(new Dimension(100, 30)); 
         stockDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -91,6 +103,12 @@ public class myGui extends JFrame {
         chartPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.WHITE), "BIST100", 2, 2, 
             new Font("Arial", Font.BOLD, 12), Color.WHITE));
+
+        BufferedImage chartImage = new chartGenerator("bist100").createChart();
+        JLabel chartLabel = new JLabel();
+        chartLabel.setIcon(new ImageIcon(chartImage));
+        chartLabel.setBounds(20, 20, 270, 180);
+        chartPanel.add(chartLabel);
         
 
         leftPanel.add(chartPanel);
@@ -110,21 +128,52 @@ public class myGui extends JFrame {
         portfolioLabel.setFont(new Font("Arial", Font.BOLD, 18));
         centerPanel.add(portfolioLabel, BorderLayout.NORTH);
     
+       
         JPanel pieChartPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
-                
                 super.paintComponent(g);
-                g.setColor(Color.ORANGE);
-                g.fillArc(50, 30, 200, 200, 0, 180); // THYAO: 50%
-                g.setColor(Color.GREEN);
-                g.fillArc(50, 30, 200, 200, 180, 72); // NVDA: 20%
-                g.setColor(Color.RED);
-                g.fillArc(50, 30, 200, 200, 252, 108); // GOLD: 10%
+                int startAngle = 0;
+                int segmentCount = percentageMap.size();
+                ArrayList<Color> colorList = generateColors(segmentCount);
+
+                //when i used stocks array it gave null pointer exception because some symbols are not in portfolio :))
+                String[] portfolio_stocks = percentageMap.keySet().toArray(new String[0]);
+                for (int i = 0; i < segmentCount; i++) {
+
+                    Double value = percentageMap.get(portfolio_stocks[i]);
+                    String name = portfolio_stocks[i];
+                    int angle = (int) Math.round((double) value / 100 * 360);
+
+                    g.setColor(colorList.get(i));
+                    g.fillArc(50, 30, 200, 200, startAngle, angle);
+
+                    startAngle += angle;
+
+                    g.setColor(colorList.get(i));
+
+                    DecimalFormat df = new DecimalFormat("#.##");  // 2 decimal gptden aldım.
+
+                    int index = 0;
+
+                    for(int j = 0 ; j < stocks.length ; j++){   //i found the index of the stock in the portfolio array.
+                        if(name.equals(arr_list_portfolio.get(j).split(" ")[0])){
+                            index = j;
+                            break;
+                        }
+                    }
+
+                    int quantity = Integer.parseInt(arr_list_portfolio.get(index).split(" ")[1]);
+                    double price = Double.parseDouble(arr_list_portfolio.get(index).split(" ")[2]);
+                    String value_for_draw = name + " %" + df.format(value) + " You have:"+ quantity +" Average:"+ df.format(price);
+                    g.drawString(value_for_draw, 10, 250 + i * 15);
+                }
             }
         };
-        pieChartPanel.setPreferredSize(new Dimension(300, 200));
+        pieChartPanel.setPreferredSize(new Dimension(300, 390));
         pieChartPanel.setBackground(new Color(35, 39, 64));
+        centerPanel.add(pieChartPanel, BorderLayout.CENTER);
+    
 
         JButton RefreshButton = new JButton("Refresh");
         RefreshButton.setPreferredSize(new Dimension(200, 25)); 
@@ -139,7 +188,7 @@ public class myGui extends JFrame {
             }
         });
         pieChartPanel.add(RefreshButton , BorderLayout.SOUTH);
-        centerPanel.add(pieChartPanel, BorderLayout.CENTER);
+        centerPanel.add(pieChartPanel, BorderLayout.NORTH);
     
         
         
@@ -210,13 +259,107 @@ public class myGui extends JFrame {
         rightPanel.setBounds(660, 20, 300, 520);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-        JLabel newsLabel = new JLabel("DAILY NEWS");
+        JLabel newsLabel = new JLabel("NEWS");
         newsLabel.setForeground(Color.WHITE);
         newsLabel.setFont(new Font("Arial", Font.BOLD, 18));
         newsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         rightPanel.add(newsLabel);
 
+        // Input area for topic
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBackground(new Color(35, 39, 64));
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+        inputPanel.setMaximumSize(new Dimension(280, 30)); // Adjust to fit within the panel
+
+        JTextField topicField = new JTextField();
+        topicField.setMaximumSize(new Dimension(200, 30));
+        topicField.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JButton submitButton = new JButton("Search");
+        submitButton.setFont(new Font("Arial", Font.BOLD, 14));
+        submitButton.setBackground(new Color(255, 87, 34));
+        submitButton.setForeground(Color.black);
+
+        inputPanel.add(topicField);
+        inputPanel.add(Box.createRigidArea(new Dimension(10, 0))); // Add spacing between components
+        inputPanel.add(submitButton);
+
+        rightPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing between components
+        rightPanel.add(inputPanel);
+
+        // News container setup
+        JPanel newsContainer = new JPanel();
+        newsContainer.setBackground(new Color(35, 39, 64));
+        newsContainer.setLayout(new BoxLayout(newsContainer, BoxLayout.Y_AXIS));
+
+        JScrollPane scrollPane = new JScrollPane(newsContainer);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(280, 200));
+        scrollPane.setBounds(660, 80, 300, 520);
+        rightPanel.add(scrollPane);
+
+        // Add action listener for the button
+        submitButton.addActionListener(e -> {
+            String topic = topicField.getText();
+            if (!topic.isEmpty()) {
+                try {
+                    newsList = controllerObj.fetchNews(topic);
+                    if(newsList.size() == 0){
+                        errorPopup(new Exception("No news found for the topic"));
+                    }
+                    newsContainer.removeAll();
+                    for(int i = 0 ; i < newsList.size() ; i++){
+                        //System.out.println(newsList.get(i).getTitle());
+                        addNewsItem(newsContainer, newsList.get(i).getTitle(), newsList.get(i).getUrl_str());
+                    }
+                   
+                } catch (Exception e1) {
+                    errorPopup(e1);
+                }
+            } else {
+                errorPopup(new emptyStringException("Please enter a topic"));
+
+            }
+        });
+
+      
         return rightPanel;
+    }
+
+    private void addNewsItem(JPanel container, String title, String url) {
+        JPanel newsItem = new JPanel();
+        newsItem.setBackground(new Color(35, 39, 64));
+        newsItem.setLayout(new BoxLayout(newsItem, BoxLayout.Y_AXIS));
+
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        newsItem.add(titleLabel);
+
+        //makes url clickable
+        //https://stackoverflow.com/questions/527719/how-to-add-hyperlink-in-jlabel
+        JLabel urlLabel = new JLabel("<html><a href='" + url + "'>" + url + "</a></html>");
+        urlLabel.setForeground(Color.CYAN);
+        urlLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        urlLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        //opens the url in the default browser woow :))
+        urlLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    Desktop.getDesktop().browse(new java.net.URI(url));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        newsItem.add(urlLabel);
+
+        newsItem.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        container.add(newsItem);
+        container.revalidate();
+        container.repaint();
     }
 
     private void RefreshGui() throws Exception {
@@ -238,5 +381,20 @@ public class myGui extends JFrame {
     getContentPane().repaint();
 }
 
+private ArrayList<Color> generateColors(int segmentCount) {
+    ArrayList<Color> colors = new ArrayList<>();
+    
+    Color[] predefinedColors = {Color.GREEN, Color.RED, Color.BLUE, 
+        Color.MAGENTA, Color.ORANGE, Color.GRAY , Color.LIGHT_GRAY , Color.DARK_GRAY  , Color.CYAN , Color.WHITE}; 
+    
+    for (int i = 0; i < segmentCount; i++) {
+        colors.add(predefinedColors[i % predefinedColors.length]);
+    }
+    return colors;
+}
+
+private void errorPopup(Exception e) {
+    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
     }
 

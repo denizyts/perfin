@@ -10,7 +10,7 @@ public class TradePage extends JFrame{
 
     String symbol;
 
-    public TradePage (String stock) throws Exception { //parametre olarak ana sayfadan seçilen hissenin ismi gelmeli ki dataları ona göre çekelim
+    public TradePage (String stock) throws Exception { 
         this.symbol = stock;
         setTitle("Operation Page");
         setSize(1000, 600);
@@ -106,13 +106,17 @@ public class TradePage extends JFrame{
         submitButton.setPreferredSize(new Dimension(75, 25)); 
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
         submitButton.addActionListener(e -> {
+            int res = 0;
             try{
                 controller controllerObj = new controller();
-                controllerObj.buyOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
+                res = controllerObj.buyOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
             }
             catch (Exception e1){
                 e1.printStackTrace();
                 errorPopup(e1);
+            }
+            if(res == 1){
+                successPopup("Buy");
             }
         });
         rightPanel.add(submitButton);
@@ -169,14 +173,19 @@ public class TradePage extends JFrame{
         submitButton.setPreferredSize(new Dimension(75, 25)); 
         submitButton.setAlignmentX(Component.CENTER_ALIGNMENT); 
         submitButton.addActionListener(e -> {
+            int res = 0;
             try{
                 controller controllerObj = new controller();
-                controllerObj.sellOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
+                res = controllerObj.sellOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
             }
             catch (Exception e1){
                 e1.printStackTrace();
                 errorPopup(e1);
             }
+            if(res == 1){
+                successPopup("Sell");
+            }
+
         });
         rightPanel.add(submitButton);
         
@@ -192,5 +201,10 @@ public class TradePage extends JFrame{
 
     private void errorPopup(Exception e){
         JOptionPane.showMessageDialog(this, e, "ERROR !", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void successPopup(String message_param){
+        String message = message_param + " Operation Successful";
+        JOptionPane.showMessageDialog(this, message, "SUCCESS !", JOptionPane.INFORMATION_MESSAGE);
     }
 }

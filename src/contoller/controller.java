@@ -2,10 +2,12 @@ package contoller;
 import exceptions.*;
 import gui.*;
 import denocanDB.*;
+import newsApi.*;
 import java.util.HashMap;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//this class is only for read from csv bist100 values and write them to bist100 table in db
 
 public class controller {
     
@@ -61,14 +63,29 @@ public class controller {
         return percentageMap;
     }
 
-    public void buyOperation(String symbol , double price , int quantity) throws Exception {
-        db_funcs db_funcsObj = new db_funcs();
-        db_funcsObj.buy_stock(symbol, price , quantity);
+    public int buyOperation(String symbol , double price , int quantity) throws Exception {
+        int res;
+        try{
+            db_funcs db_funcsObj = new db_funcs();
+            res = db_funcsObj.buy_stock(symbol, price , quantity);
+        }
+        catch (Exception e){
+            throw new Exception("error bip bip: " + e.getMessage());
+        }
+        return res;
+       
     }
 
-    public void sellOperation(String symbol , double price , int quantity) throws Exception {
-        db_funcs db_funcsObj = new db_funcs();
-        db_funcsObj.sell_stock(symbol, price , quantity);
+    public int sellOperation(String symbol , double price , int quantity) throws Exception {
+        int res;
+        try{
+            db_funcs db_funcsObj = new db_funcs();
+            res = db_funcsObj.sell_stock(symbol, price , quantity);
+        }
+        catch (Exception e){
+            throw new Exception("error bip bip: " + e.getMessage());
+        }
+        return res;
     }
 
     public Double[] getHistPriceData(String symbol) throws Exception {
@@ -83,6 +100,11 @@ public class controller {
         }
 
         return data;
+    }
+
+    public ArrayList<newsField> fetchNews(String keyword) throws Exception {
+        newsFetcher fetcher = new newsFetcher();
+        return fetcher.fetchNews(keyword);
     }
     
 }

@@ -97,7 +97,7 @@ public class db_funcs{
 
             int newAmount = amount - quantity;
             if (newAmount == 0 ){
-              String deleteQuery = "delete * from portfolio where symbol =  = \"" + symbol + "\")";
+              String deleteQuery = "delete from portfolio where symbol = \"" + symbol + "\"";
               executeSpecialQuery(deleteQuery, connection);
             }
             else{

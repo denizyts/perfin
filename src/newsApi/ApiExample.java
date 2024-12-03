@@ -11,8 +11,9 @@ public class ApiExample {
         try {
             // API URL'si
             URL url = new URL("https://newsapi.org/v2/everything?q=isctr&from=2024-11-01&sortBy=publishedAt&apiKey=" + api_key);
+            URL url2 = new URL("https://newsapi.org/v2/everything?q=bist100&from=2024-11-03&sortBy=publishedAt&apiKey=bfaf4fd25b1f42ccb8751d72e41949da");
          
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url2.openConnection();
             
             con.setRequestMethod("GET");
             con.setInstanceFollowRedirects(true); // Otomatik yönlendirme

@@ -41,6 +41,7 @@ select * from person
 select * from symbols
 select * from last_operations
 select * from portfolio
+select * from bist100
 
 
 insert into doas (date, close_price) values("aaa", 32.5)
@@ -73,3 +74,5 @@ insert into portfolio (symbol, amount, avgPrice) values ("doas", 5 , 101.32)
 select exists(select 1 from portfolio where symbol = "doas")
 
 delete from last_operations where symbol = "doas"
+
+create table bist100 ( date TEXT UNIQUE, close_price REAL)
