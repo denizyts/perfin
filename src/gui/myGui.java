@@ -316,6 +316,7 @@ public class myGui extends JFrame {
                     }
                    
                 } catch (Exception e1) {
+                    e1.printStackTrace();
                     errorPopup(e1);
                 }
             } else {

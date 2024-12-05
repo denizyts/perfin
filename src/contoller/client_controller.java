@@ -2,10 +2,10 @@ package contoller;
 
 import socket.*;
 import gui.*;
-
+import newsApi.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import newsApi.*;
+
 
 public class client_controller extends controller {
 
@@ -78,9 +78,9 @@ public class client_controller extends controller {
         }
         
         @Override
-        @SuppressWarnings("unchecked")  
-        public ArrayList<newsField> fetchNews(String symbol) {
-            return (ArrayList<newsField>)clientObj.connectGetObj("fetchNews", new String[] {symbol});
+        public ArrayList<newsField> fetchNews(String keyword) {
+            newsFetcher fetcher = new newsFetcher();
+            return fetcher.fetchNews(keyword);
         }
 
         @Override

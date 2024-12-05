@@ -58,8 +58,6 @@ public class server {
                     return controller.percentageCalculator();
                 case "getHistPriceData":
                     return controller.getHistPriceData((String)args[0]);
-                case "fetchNews":
-                    return controller.getHistPriceData((String)args[0]);
                 case "getLastOperations":
                     return controller.getLastOperations();
                 case "getPortfolio":

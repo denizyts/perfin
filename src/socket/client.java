@@ -12,7 +12,7 @@ public class client {
         host = "localhost";
         port = 3132; 
     }
-
+    
     public Object connectGetObj(String methodName, String[] args) {
 
         Object response = null;
