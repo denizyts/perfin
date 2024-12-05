@@ -33,8 +33,9 @@ public class server_test {
        
     }
 
-    public static void main(String[] args) {
-        new server_test(3131);
+    public static void main(String[] args) throws UnknownHostException {
+
+        new server_test(3132);
     }
     
         

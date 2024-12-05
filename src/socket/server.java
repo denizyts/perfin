@@ -2,7 +2,7 @@ package socket;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import contoller.controller;
+import contoller.server_controller;
 
 public class server {
     
@@ -47,7 +47,7 @@ public class server {
     }
 
     public Object callController(String methodName, String[] args){
-        controller controller = new controller();
+        server_controller controller = new server_controller();
         try {
             switch (methodName) {
                 case "buyOperation":

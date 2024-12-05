@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "newsFetcher",
+            "request": "launch",
+            "mainClass": "newsApi.newsFetcher",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
+            "name": "server_test",
+            "request": "launch",
+            "mainClass": "socket.server_test",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
             "name": "client_controller",
             "request": "launch",
             "mainClass": "contoller.client_controller",

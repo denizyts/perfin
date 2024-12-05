@@ -36,6 +36,14 @@ public class client {
             output.println("percentageCalculator");
             output.println(0); // Number of arguments  */
 
+            System.out.println("Request to server: " );
+            System.out.println(methodName);
+            System.out.println("Arguments: ");
+            for (String arg : args) {
+                System.out.print(arg + " ");
+            }
+            System.out.println("\n--------------------------------------");
+
             //THIS PART IS VITAL :))
             output.println(methodName);
             output.println(args.length); 
@@ -44,7 +52,7 @@ public class client {
             }
         
             response = objectInput.readObject();
-            System.out.println("Response from server: " + response);
+            //System.out.println("Response from server: " + response);
 
         } catch (Exception e) {
             e.printStackTrace();

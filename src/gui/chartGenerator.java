@@ -6,7 +6,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import contoller.controller;
+import contoller.server_controller;
 
 
 
@@ -16,7 +16,7 @@ public class chartGenerator {
     private String symbol;
 
     public chartGenerator(String symbol) throws Exception {
-        controller controller = new controller();
+        server_controller controller = new server_controller();
         this.data = controller.getHistPriceData(symbol);
         this.symbol = symbol;
     }

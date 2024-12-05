@@ -3,7 +3,6 @@ package contoller;
 import socket.*;
 import gui.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import newsApi.*;
@@ -12,10 +11,12 @@ public class client_controller extends controller {
 
         client clientObj;
         
+        
         public client_controller() {
             clientObj = new client("localhost", 3132);
         }
 
+        @Override
         public void refreshGui(myGui myGui) {
             try {
             
@@ -29,7 +30,7 @@ public class client_controller extends controller {
             }
         }
 
-        @SuppressWarnings("unchecked")
+        @Override
         public void refreshOperationPage(OperationPage operationPage) {
             try {
                 operationPage.setLastOperations(getLastOperations());
@@ -39,16 +40,18 @@ public class client_controller extends controller {
            
         }
         
-        public int buyOperation(String symbol, Double price, int amount) {
-            Object response = clientObj.connectGetObj("buyOperation", new String[] {symbol, price.toString(), Integer.toString(amount)});
-            return (Integer)response;
+        @Override
+        public int buyOperation(String symbol, Double price, int amount) throws Exception {
+            return (Integer) clientObj.connectGetObj("buyOperation", new String[] {symbol, price.toString(), Integer.toString(amount)});
         }
         
-        public int sellOperation(String symbol, Double price, int amount) {
+        @Override
+        public int sellOperation(String symbol, Double price, int amount) throws Exception {
             Object response = clientObj.connectGetObj("sellOperation", new String[] {symbol, price.toString(), Integer.toString(amount)});
             return (Integer)response;
         }
         
+        @Override
         @SuppressWarnings("unchecked")   //bunu vscode koydu anlamadım :))
         public HashMap<String , Double> percentageCalculator() {
 
@@ -61,6 +64,7 @@ public class client_controller extends controller {
             return hm;
         }
         
+        @Override
         public Double[] getHistPriceData(String symbol) {
 
             Double[] response = (Double[])clientObj.connectGetObj("getHistPriceData", new String[] {symbol});
@@ -73,21 +77,25 @@ public class client_controller extends controller {
             
         }
         
+        @Override
         @SuppressWarnings("unchecked")  
         public ArrayList<newsField> fetchNews(String symbol) {
             return (ArrayList<newsField>)clientObj.connectGetObj("fetchNews", new String[] {symbol});
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public ArrayList<String> getLastOperations() {
             return (ArrayList<String>)clientObj.connectGetObj("getLastOperations", new String[] {});
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public ArrayList<String> getPortfolio() {
             return (ArrayList<String>)clientObj.connectGetObj("getPortfolio", new String[] {});
         }
 
+        @Override
         public String[] getStocks() {
             return (String[])clientObj.connectGetObj("getStocks", new String[] {});
         }
@@ -98,4 +106,8 @@ public class client_controller extends controller {
             cc.percentageCalculator();
             cc.getPortfolio();
         }
+
+       
+
+      
 }

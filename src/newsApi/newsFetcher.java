@@ -21,6 +21,7 @@ public class newsFetcher {
         try {
             // API URL
             String urlString = "https://newsapi.org/v2/everything?q=" + searchQuery + "&from=2024-11-03&sortBy=publishedAt&apiKey=" + api_key;
+            urlString = "https://newsapi.org/v2/everything?q=" + searchQuery + "&from=2024-11-05&sortBy=publishedAt&apiKey=bfaf4fd25b1f42ccb8751d72e41949da";
             URL url = new URL(urlString);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -51,17 +52,6 @@ public class newsFetcher {
                     JsonObject article = articles.get(i).getAsJsonObject();
                     String title = article.get("title").getAsString();
                     String urlLink = article.get("url").getAsString();
-
-                    /* 
-                    JsonElement urlToImageElement = article.get("urlToImage");
-                    String urlToImage = (urlToImageElement != null && !urlToImageElement.isJsonNull())
-                            ? urlToImageElement.getAsString()
-                            : "No image available"; 
-                 
-                    System.out.println("Title: " + title);
-                    System.out.println("URL: " + urlLink);
-                    System.out.println("Image: " + urlToImage);
-                    System.out.println("---------------------------------------");  */
 
                     arrList.add(new newsField(title, urlLink)); 
                 }

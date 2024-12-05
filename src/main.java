@@ -1,8 +1,6 @@
-import contoller.controller;
-
-import org.checkerframework.checker.units.qual.A;
-
+import contoller.server_controller;
 import contoller.client_controller;
+import contoller.controller;
 import gui.myGui;
 
 public class main {
@@ -12,7 +10,7 @@ public class main {
         try{
        
         controller AcontrollerObj = new client_controller();
-        //controller = new controller();
+        //controller = new server_controller();
         myGui bismillah = new myGui(AcontrollerObj);
         bismillah.showGui();
     }
