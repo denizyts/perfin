@@ -3,16 +3,18 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import contoller.controller;
+import contoller.*;
 
 
 public class OperationPage extends JFrame{
 
     ArrayList<String> last_operations_arr_list;
+    controller controllerObj;
 
-    public OperationPage() throws Exception {
+    public OperationPage(controller controller_param) throws Exception {
         
-        controller controllerObj = new controller();
+        this.controllerObj = controller_param;
+        //controller controllerObj = new controller();
         controllerObj.refreshOperationPage(this);
         setTitle("Operation Page");
         setSize(1000, 600);
@@ -96,7 +98,7 @@ public class OperationPage extends JFrame{
     }
 
     private void homePage() throws Exception {
-        myGui gui = new myGui();
+        myGui gui = new myGui(controllerObj);
         gui.showGui();
         this.dispose();
     }

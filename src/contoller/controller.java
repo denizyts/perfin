@@ -4,19 +4,22 @@ import gui.*;
 import denocanDB.*;
 import newsApi.*;
 import java.util.HashMap;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 //this class is only for read from csv bist100 values and write them to bist100 table in db
 
 public class controller {
+
+    
     
     public void refreshGui(myGui myGui) throws Exception {
         try{
-            getDataFromdb db_getter = new getDataFromdb();
-            myGui.setLastOperations(db_getter.get_last_operations());
-            myGui.setPortfolio(db_getter.get_portfolio());
-            myGui.setStocks(db_getter.get_symbols().toArray(new String[db_getter.get_symbols().size()])); 
+            
+            myGui.setLastOperations(getLastOperations());
+            myGui.setPortfolio(getPortfolio());
+            myGui.setStocks(getStocks()); 
             myGui.setPercentageMap(percentageCalculator());
             
         }
@@ -28,8 +31,7 @@ public class controller {
 
     public void refreshOperationPage(OperationPage operationPage) throws Exception {
         try{
-            getDataFromdb db_getter = new getDataFromdb();
-            operationPage.setLastOperations(db_getter.get_last_operations());
+        operationPage.setLastOperations(getLastOperations()); 
         }
         catch (Exception e){
             throw new Exception("error bip bip: " + e.getMessage());
@@ -105,6 +107,21 @@ public class controller {
     public ArrayList<newsField> fetchNews(String keyword) throws Exception {
         newsFetcher fetcher = new newsFetcher();
         return fetcher.fetchNews(keyword);
+    }
+
+    public ArrayList<String> getLastOperations() throws Exception {
+        getDataFromdb db_funcsObj = new getDataFromdb();
+        return db_funcsObj.get_last_operations();
+    }
+
+    public ArrayList<String> getPortfolio() throws Exception {
+        getDataFromdb db_funcsObj = new getDataFromdb();
+        return db_funcsObj.get_portfolio();
+    }
+
+    public String[] getStocks() throws Exception {
+        getDataFromdb db_funcsObj = new getDataFromdb();
+        return db_funcsObj.get_symbols().toArray(new String[db_funcsObj.get_symbols().size()]);
     }
     
 }

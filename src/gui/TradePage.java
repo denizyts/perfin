@@ -2,15 +2,19 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import contoller.controller;
+import contoller.*;
 
 import java.awt.image.BufferedImage;
 
 public class TradePage extends JFrame{
 
     String symbol;
+    controller controllerObj;
 
-    public TradePage (String stock) throws Exception { 
+
+    public TradePage (String stock , controller controller_param) throws Exception { 
+        this.controllerObj = controller_param;
+        //controllerObj = new controller();
         this.symbol = stock;
         setTitle("Operation Page");
         setSize(1000, 600);
@@ -108,7 +112,6 @@ public class TradePage extends JFrame{
         submitButton.addActionListener(e -> {
             int res = 0;
             try{
-                controller controllerObj = new controller();
                 res = controllerObj.buyOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
             }
             catch (Exception e1){
@@ -175,7 +178,6 @@ public class TradePage extends JFrame{
         submitButton.addActionListener(e -> {
             int res = 0;
             try{
-                controller controllerObj = new controller();
                 res = controllerObj.sellOperation(symbol, (Double)PriceSpinner.getValue(), (Integer)StockSpinner.getValue());
             }
             catch (Exception e1){
@@ -194,7 +196,7 @@ public class TradePage extends JFrame{
 
 
     private void homePage() throws Exception {
-        myGui mg = new myGui();     //for refreshing new object created also refreshes main page.
+        myGui mg = new myGui(this.controllerObj);     //for refreshing new object created also refreshes main page.
         mg.showGui();    
         this.dispose();
     }

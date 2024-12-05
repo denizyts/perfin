@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import contoller.controller;
+import contoller.*;
 import exceptions.emptyStringException;
 import newsApi.newsField;  
 
@@ -19,8 +19,9 @@ public class myGui extends JFrame {
     controller controllerObj;
     ArrayList<newsField> newsList;
 
-    public myGui() throws Exception {
-        controllerObj = new controller();
+    public myGui(controller param_controller) throws Exception {
+        controllerObj = param_controller; 
+        //controllerObj = new controller();
         controllerObj.refreshGui(this);
     }
 
@@ -243,12 +244,12 @@ public class myGui extends JFrame {
     }
 
     private void openNewOperationPage() throws Exception {
-        new OperationPage(); 
+        new OperationPage(this.controllerObj); 
         this.dispose(); 
     }
 
     private void openTradePage(String stock) throws Exception {
-        new TradePage(stock);
+        new TradePage(stock , this.controllerObj);
         this.dispose();
     }
 
