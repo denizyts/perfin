@@ -1,5 +1,4 @@
 package contoller;
-import exceptions.*;
 import gui.*;
 import denocanDB.*;
 import newsApi.*;
@@ -74,12 +73,16 @@ public class server_controller extends controller {
             res = db_funcsObj.buy_stock(symbol, price , quantity);
         }
         catch (Exception e){
-            throw new Exception("error bip bip: " + e.getMessage());
+            //throw new Exception("error bip bip: " + e.getMessage());
+            System.out.println("error bip bip: " );
+            e.printStackTrace();
+            return 0;
         }
         return res;
        
     }
 
+    
     @Override
     public int sellOperation(String symbol , Double price , int quantity) throws Exception {
         int res;
@@ -88,9 +91,14 @@ public class server_controller extends controller {
             res = db_funcsObj.sell_stock(symbol, price , quantity);
         }
         catch (Exception e){
-            throw new Exception("error bip bip: " + e.getMessage());
+            //throw new Exception("error bip bip: " + e.getMessage());
+            System.out.println("error bip bip: " );
+            e.printStackTrace();
+            return 0;
+
         }
         return res;
+        
     }
 
     @Override

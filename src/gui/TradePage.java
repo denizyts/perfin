@@ -85,7 +85,7 @@ public class TradePage extends JFrame{
         rightPanel.add(countLabel);
 
         // alış adet sayaç
-        JSpinner StockSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1)); 
+        JSpinner StockSpinner = new JSpinner(new SpinnerNumberModel(1, -100000, 10000, 1)); 
         StockSpinner.setMaximumSize(new Dimension(250, 30)); 
         rightPanel.add(StockSpinner);
 
@@ -99,7 +99,7 @@ public class TradePage extends JFrame{
         rightPanel.add(salePriceLabel);
 
         // alış adet sayaç
-        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 0.1)); 
+        JSpinner PriceSpinner = new JSpinner(new SpinnerNumberModel(1, -100000, 10000, 0.1)); 
         PriceSpinner.setMaximumSize(new Dimension(250, 30)); 
         rightPanel.add(PriceSpinner);
         
@@ -120,6 +120,9 @@ public class TradePage extends JFrame{
             }
             if(res == 1){
                 successPopup("Buy");
+            }
+            if(res == 0){
+                errorPopup(new Exception("INVALID PRICE OR QUANTITY PLEASE CHECK"));
             }
         });
         rightPanel.add(submitButton);
@@ -186,6 +189,9 @@ public class TradePage extends JFrame{
             }
             if(res == 1){
                 successPopup("Sell");
+            }
+            else if(res == 0){
+                errorPopup(new Exception("Not enough stock to sell"));
             }
 
         });

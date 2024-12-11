@@ -18,7 +18,7 @@ public class db_main {
         //ulo.insert_function("doas", 3, 3.1, "BUY");
         ulo.start(); */
 
-        getDataFromdb getDbObj = new getDataFromdb();
+       /*  getDataFromdb getDbObj = new getDataFromdb();
         ArrayList<String> arrList = getDbObj.get_last_operations();
         arrList = getDbObj.get_symbols();
         arrList = getDbObj.get_portfolio();
@@ -31,10 +31,14 @@ public class db_main {
         for(int i = 0 ; i < hist_data_arrList.size() ; i++){
             System.out.print(hist_data_arrList.get(i).getDate() + " ");
             System.out.print(hist_data_arrList.get(i).getClose_price());
-            System.out.println();
+            System.out.println();   */
+
+
+
+            myDb_funcs.sell_stock("doas", 1.0, 555555555);
         }
         
     }
-}
+
 
 

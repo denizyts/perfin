@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "db_main",
+            "request": "launch",
+            "mainClass": "denocanDB.db_main",
+            "projectName": "perfin_4b176466"
+        },
+        {
+            "type": "java",
             "name": "newsFetcher",
             "request": "launch",
             "mainClass": "newsApi.newsFetcher",
